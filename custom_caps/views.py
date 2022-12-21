@@ -23,7 +23,7 @@ from .pagination import CapsPagination
 class MainMenuListAPIView(ListAPIView):
     queryset = Caps.objects.all()
     serializer_class = CapMainMenuSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsStaffUser]
 
 
 class CategoryListCreateAPIView(ListCreateAPIView):
@@ -49,21 +49,21 @@ class BrandUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Brand.objects.all()
     serializer_class = BrandUpdateDeleteSerializer
     lookup_field = 'id'
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
 
 
 class CategoryUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryUpdateDeleteSerializer
     lookup_field = 'id'
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
 
 
 class CapsUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
     queryset = Caps.objects.all()
     serializer_class = CapUpdateDeleteSerializer
     lookup_field = 'id'
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
 
 
 class ManufacturerListAPIview(generics.ListCreateAPIView):
@@ -78,14 +78,14 @@ class ManufacturerListAPIview(generics.ListCreateAPIView):
 class ManufacturerItemUpdateDeleteAPIview(generics.RetrieveUpdateDestroyAPIView):
     queryset = Manufacturer.objects.all()
     serializer_class = ManufacturerSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminUser]
     authentication_classes = [JWTAuthentication, ]
     name = 'manufacturer-detail'
     lookup_field = 'id'
 
 
 class UserCapsRelationAPIview(UpdateModelMixin, GenericViewSet):
-    permission_classes = [IsStaffUser]
+    permission_classes = [IsAuthenticated]
     queryset = UserCapsRelation.objects.all()
     serializer_class = UserCapsRelationSerializer
     authentication_classes = [JWTAuthentication, ]
