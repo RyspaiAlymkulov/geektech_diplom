@@ -45,7 +45,7 @@ class Size(models.Model):
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name="Название")
-    description = models.TextField(verbose_name="Описание")
+    description = models.TextField(blank=True, verbose_name="Описание")
     country_of_origin = models.CharField(blank=True, null=True, max_length=50, verbose_name="Страна производства")
 
     class Meta:
@@ -70,6 +70,7 @@ class Caps(models.Model):
     categories = models.ManyToManyField(Category, related_name='caps')
     sizes = models.ManyToManyField(Size, related_name='size')
     image = models.ImageField(null=True, blank=True, verbose_name="Фотография")
+    description = models.TextField(blank=True, verbose_name='Описание')
     manufacturer = models.ForeignKey(Manufacturer,
                                      related_name='Shops',
                                      on_delete=models.CASCADE, verbose_name="Производитель")
@@ -91,9 +92,6 @@ class Caps(models.Model):
     def get_name(self):
         name = self.name if self.name else self.collection.name
         return name
-
-    def description(self):
-        return self.collection.description
 
     def __str__(self):
         return f'ID {self.id}: {self.name}'

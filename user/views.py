@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from user.serializers import RegisterSerializer, LoginSerializer, ResetPasswordEmailRequestSerializer, \
-    SetNewPasswordSerializer, CustomUserSerializers, LogoutSerializer
+    SetNewPasswordSerializer, CustomUserSerializers, LogoutSerializer, ProfileSerializer
 from .models import CustomUser
 from .renderers import UserRenderer
 from .utils import Util
@@ -104,9 +104,9 @@ class ProfileUser(generics.GenericAPIView):
     permission_classes = [
         IsAuthenticated,
     ]
-    serializer_class = CustomUserSerializers
+    serializer_class = ProfileSerializer
     queryset = CustomUser.objects.all()
-    authentication_classes = [JWTAuthentication]
+    authentication_classes = [JWTAuthentication, ]
 
 
 class LogoutAPIView(generics.GenericAPIView):
